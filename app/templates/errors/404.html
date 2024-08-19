@@ -1,21 +1,28 @@
 {% extends "base.html" %}
 
 {% block body %}
-
-<svg class="w-12 h-12 mt-8 text-purple-200" fill="currentColor" viewBox="0 0 20 20">
-    <path fill-rule="evenodd"
-        d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z"
-        clip-rule="evenodd"></path>
-</svg>
-<h1 class="text-6xl font-semibold text-gray-700 dark:text-gray-200">
-    404
-</h1>
-<p class="text-gray-700 dark:text-gray-300">
-    Page not found. Check the address or
-    <a class="text-purple-600 hover:underline dark:text-purple-300" href="{{ url_for('books.list_books') }}">
-        go back
-    </a>
-    .
-</p>
-
+<div class="flex items-center justify-center min-h-screen">
+    <div class="text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" class="mx-auto">
+            <circle cx="32" cy="32" r="20" fill="#2F4F4F"/> <!-- Dark Gray base -->
+            <ellipse cx="32" cy="36" rx="28" ry="8" fill="#696969"/> <!-- Gray rim -->
+            <ellipse cx="32" cy="34" rx="22" ry="6" fill="#D3D3D3"/> <!-- Light Gray top -->
+            <circle cx="22" cy="36" r="2" fill="#000000"/> <!-- Black lights -->
+            <circle cx="42" cy="36" r="2" fill="#000000"/>
+            <circle cx="32" cy="32" r="12" fill="#A9A9A9"/> <!-- Dark Gray dome -->
+            <circle cx="32" cy="32" r="8" fill="#696969"/> <!-- Gray center -->
+            <path d="M32,20 a12,8 0 0,1 12,8 a12,8 0 0,1 -12,8 a12,8 0 0,1 -12,-8 a12,8 0 0,1 12,-8" fill="none" stroke="#000000" stroke-width="2"/> <!-- Black outline -->
+        </svg>
+        <h1 class="text-6xl font-semibold text-gray-700 dark:text-gray-200">
+            404
+        </h1>
+        <p class="text-gray-700 dark:text-gray-300">
+            Page not found. Check the address or
+            <a class="text-gray-600 hover:underline dark:text-gary-300" href="{{ url_for('books.list_books') }}">
+                go back
+            </a>
+            .
+        </p>
+    </div>
+</div>
 {% endblock %}
