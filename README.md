@@ -33,7 +33,7 @@ To get started with Luna, follow these steps:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/luna-library-management.git
+   git clone https://github.com/AmalChandru/luna.git
    cd luna-library-management
    ```
 
