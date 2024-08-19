@@ -55,7 +55,7 @@ To get started with Luna, follow these steps:
 
 4. **Set up MongoDB**:
    - Ensure you have MongoDB installed and running.
-   - Update the database connection string in the configuration file.
+   - Update the database connection string in the [configuration file](./app/config/development.py).
 
 5. **Run the application**:
    ```bash
@@ -91,10 +91,13 @@ Here are some key API endpoints available in Luna:
 - **Create Transaction**: `POST /transactions/create`
 - **Close Transaction**: `POST /transactions/close/<transaction_id>`
 
-## Resources That Helped
+For more details please checkout [documentation guide](./docs/documentation.md)
+
+## Brewed with:
 
 - **[Windmill Dashboard](https://github.com/estevanmaito/windmill-dashboard)**: Multi-theme, accessible dashboard with Tailwind CSS. 🛠️
 - **[The Flask Mega-Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)**: Engaging tutorial for learning Flask. 📚
+- A generous splash of Coffee ☕ and a sprinkle of Love ❤️
 
 ## Contributing
 
