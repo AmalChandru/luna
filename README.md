@@ -1,6 +1,11 @@
 # Luna 🛸
 
 Luna is a powerful library management application designed to help librarians manage books, members, and transactions efficiently. Built using Flask, MongoDB, Jinja, and Tailwind CSS, Luna provides a user-friendly interface and robust functionality for library operations. 
+<p align="center">
+  <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXl1eHpvdXEza3lyZHNza3l4bXBpZ2MycjFiOHp1MWR6eDh0ZTN2eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/pBoI7kes1IANE0pD2f/giphy.gif" alt="Rick n Morty with Luna">
+   <br>
+   <strong>Wubba Lubba Dub Dub!</strong> - <em><small>Rick n' Morty discussing about Luna</small></em>
+</p>
 
 ## Table of Contents
 
