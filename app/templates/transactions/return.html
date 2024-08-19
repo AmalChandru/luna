@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block form %}
+<div class="flex flex-col flex-1 w-full">
+    <main class="h-full overflow-y-auto">
+        <div class="container px-6 mx-auto grid">
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Return Book ↩️📚
+            </h2>
+            <!-- Start of the form -->
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <form action="{{ url_for('transactions.close_transaction', transaction_id=transaction_info._id) }}" method="POST">
+                    <p class="mt-4 text-sm font-bold text-gray-700 dark:text-gray-400">Per Day Fee: {{ transaction_info.per_day_fee }}</p>
+                    <p class="mt-4 text-sm font-bold text-gray-700 dark:text-gray-400">Borrowed On: {{ transaction_info.borrowed_on }}</p>
+                    <p class="mt-4 text-sm font-bold text-gray-700 dark:text-gray-400">Rented for: {{ transaction_info.rented_for }} days</p>
+                    <p class="mt-4 text-sm font-bold text-gray-700 dark:text-gray-400">Amount Due: {{ transaction_info.amount_due }}</p>
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Fee/Day</span>
+                        <input type="number" name="amount_paid" 
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" 
+                            placeholder="Enter Amount Paid" required />
+                    </label>
+                    <div class="flex mt-6">
+                        <button type="submit"
+                            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-black border border-transparent rounded-lg active:bg-black hover:bg-gray-800 focus:outline-none focus:shadow-outline-black">
+                            Return
+                        </button>
+                        <button type="button"
+                            class="ml-4 px-4 py-2 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 bg-gray-200 border border-transparent rounded-lg active:bg-gray-300 hover:bg-gray-300 focus:outline-none focus:shadow-outline-gray"
+                            onclick="window.history.back();">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- End of the form -->
+        </div>
+    </main>
+</div>
+{% endblock %}

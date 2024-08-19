@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block form %}
+<div class="flex flex-col flex-1 w-full">
+    <main class="h-full overflow-y-auto">
+        <div class="container px-6 mx-auto grid">
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                {% if book %}
+                {{ book.title }} ✍️📚
+                {% else %}
+                Add New Book 🆕📚
+                {% endif %}
+            </h2>
+            <!-- Start of the form -->
+            <form action="{{ url_for('books.add_book') if not book else url_for('books.edit_book', id=book._id) }}"
+                method="POST">
+                <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Title</span>
+                        {{ form.title(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                        focus:border-black-400 focus:outline-none focus:shadow-outline-black dark:text-gray-300
+                        dark:focus:shadow-outline-gray form-input", placeholder="Book Title", value=book.title if book
+                        else '') }}
+                        {% if form.title.errors %}
+                        <div class="text-red-500 text-sm">{{ form.title.errors[0] }}</div>
+                        {% endif %}
+                    </label>
+
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Author</span>
+                        {{ form.author(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                        focus:border-black-400 focus:outline-none focus:shadow-outline-black dark:text-gray-300
+                        dark:focus:shadow-outline-gray form-input", placeholder="Author Name", value=book.author if book
+                        else '') }}
+                        {% if form.author.errors %}
+                        <div class="text-red-500 text-sm">{{ form.author.errors[0] }}</div>
+                        {% endif %}
+                    </label>
+
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Description</span>
+                        {{ form.description(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                        focus:border-black-400 focus:outline-none focus:shadow-outline-black dark:text-gray-300
+                        dark:focus:shadow-outline-gray form-textarea", placeholder="Book Description",
+                        value=book.description if book else '') }}
+                        {% if form.description.errors %}
+                        <div class="text-red-500 text-sm">{{ form.description.errors[0] }}</div>
+                        {% endif %}
+                    </label>
+
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">ISBN</span>
+                        {{ form.isbn(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                        focus:border-black-400 focus:outline-none focus:shadow-outline-black dark:text-gray-300
+                        dark:focus:shadow-outline-gray form-input", placeholder="ISBN Number", value=book.isbn if book
+                        else '') }}
+                        {% if form.isbn.errors %}
+                        <div class="text-red-500 text-sm">{{ form.isbn.errors[0] }}</div>
+                        {% endif %}
+                    </label>
+
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Publisher</span>
+                        {{ form.publisher(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                        focus:border-black-400 focus:outline-none focus:shadow-outline-black dark:text-gray-300
+                        dark:focus:shadow-outline-gray form-input", placeholder="Publisher Name", value=book.publisher
+                        if book else '') }}
+                    </label>
+
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Publication Year</span>
+                        {{ form.publication_year(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                        focus:border-black-400 focus:outline-none focus:shadow-outline-black dark:text-gray-300
+                        dark:focus:shadow-outline-gray form-input", placeholder="Publication Year",
+                        value=book.publication_year if book else '') }}
+                        {% if form.publication_year.errors %}
+                        <div class="text-red-500 text-sm">{{ form.publication_year.errors[0] }}</div>
+                        {% endif %}
+                    </label>
+
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Quantity</span>
+                        {{ form.quantity(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                        focus:border-black-400 focus:outline-none focus:shadow-outline-black dark:text-gray-300
+                        dark:focus:shadow-outline-gray form-input", placeholder="Quantity", value=book.quantity if book
+                        else '') }}
+                        {% if form.quantity.errors %}
+                        <div class="text-red-500 text-sm">{{ form.quantity.errors[0] }}</div>
+                        {% endif %}
+                    </label>
+
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Available Copies</span>
+                        {{ form.available_copies(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                        focus:border-black-400 focus:outline-none focus:shadow-outline-black dark:text-gray-300
+                        dark:focus:shadow-outline-gray form-input", placeholder="Available Copies",
+                        value=book.available_copies if book else '') }}
+                        {% if form.available_copies.errors %}
+                        <div class="text-red-500 text-sm">{{ form.available_copies.errors[0] }}</div>
+                        {% endif %}
+                    </label>
+
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Location</span>
+                        {{ form.location(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                        focus:border-black-400 focus:outline-none focus:shadow-outline-black dark:text-gray-300
+                        dark:focus:shadow-outline-gray form-input", placeholder="Location", value=book.location if book
+                        else '') }}
+                    </label>
+
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Genre</span>
+                        {{ form.genre(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                        focus:border-black-400 focus:outline-none focus:shadow-outline-black dark:text-gray-300
+                        dark:focus:shadow-outline-gray form-input", placeholder="Genre", value=book.genre if book else
+                        '') }}
+                    </label>
+
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Subject</span>
+                        {{ form.subject(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                        focus:border-black-400 focus:outline-none focus:shadow-outline-black dark:text-gray-300
+                        dark:focus:shadow-outline-gray form-input", placeholder="Subject", value=book.subject if book
+                        else '') }}
+                    </label>
+
+                    <div class="flex mt-6">
+                        <button type="submit"
+                            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-black border border-transparent rounded-lg active:bg-black hover:bg-gray-800 focus:outline-none focus:shadow-outline-black">
+                            {% if book %} Update Book {% else %} Add New Book {% endif %}
+                        </button>
+                        <button type="button"
+                            class="ml-4 px-4 py-2 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 bg-gray-200 border border-transparent rounded-lg active:bg-gray-300 hover:bg-gray-300 focus:outline-none focus:shadow-outline-gray"
+                            onclick="window.history.back();">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- End of the form -->
+        </div>
+    </main>
+</div>
+{% endblock %}
