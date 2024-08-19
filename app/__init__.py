@@ -6,7 +6,7 @@ from pymongo import MongoClient
 from .routes.books import books_bp
 from .routes.members import members_bp
 from .routes.transactions import transactions_bp
-from .routes.errors import page_not_found, internal_server_error, register_error_handlers
+from .routes.errors import register_error_handlers
 
 def create_app():
     app = Flask(__name__)
