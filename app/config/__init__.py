@@ -6,6 +6,8 @@ def get_config():
     
     if env == 'production':
         from .production import Config
+    elif env == 'testing':
+        from .testing import Config
     else:
         from .development import Config
     
