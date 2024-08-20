@@ -1,4 +1,5 @@
 from wtforms import Form, StringField, IntegerField, validators
+from wtforms.validators import NumberRange
 
 # BookForm 
 class BookForm(Form):
@@ -41,3 +42,12 @@ class BookIssueForm(Form):
 # BookReturnForm
 class BookReturnForm(Form):
     amount_paid = IntegerField('Amount Paid', [validators.InputRequired()])
+
+# ImportsForm
+class ImportBooksForm(Form):
+    no_of_books = IntegerField('No of Books', [validators.InputRequired(), NumberRange(min=1, max=20)])
+    quantity_per_book = IntegerField('Quantity Per Book', [validators.InputRequired()])
+    title = StringField('Title')
+    author = StringField('Author')
+    isbn = StringField('ISBN')
+    publisher = StringField('Publisher')

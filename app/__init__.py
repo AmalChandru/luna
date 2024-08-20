@@ -6,6 +6,7 @@ from pymongo import MongoClient
 from .routes.books import books_bp
 from .routes.members import members_bp
 from .routes.transactions import transactions_bp
+from .routes.import_books import import_books_bp
 from .routes.errors import register_error_handlers
 
 def create_app():
@@ -26,6 +27,7 @@ def create_app():
     app.register_blueprint(books_bp)
     app.register_blueprint(members_bp)
     app.register_blueprint(transactions_bp)
+    app.register_blueprint(import_books_bp)
 
     # Register error handlers
     register_error_handlers(app)
