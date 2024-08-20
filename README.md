@@ -82,7 +82,7 @@ Here are some key API endpoints available in Luna:
 - **Create Transaction**: `POST /transactions/create`
 - **Close Transaction**: `POST /transactions/close/<transaction_id>`
 
-For more details please checkout [documentation guide](./docs/documentation.md)
+For more details and screenshots please checkout [documentation](./docs/)
 
 ## Brewed with:
 
