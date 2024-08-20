@@ -94,6 +94,7 @@
                 </a>
                 <form action="{{ url_for('members.delete_member', id=member._id) }}" method="POST"
                   onsubmit="return confirm('Are you sure you want to delete this member?');">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                   <input type="hidden" name="method" value="Delete">
                   <button type="submit"
                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-black-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"

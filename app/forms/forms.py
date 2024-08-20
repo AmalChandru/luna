@@ -1,8 +1,9 @@
+from flask_wtf import FlaskForm
 from wtforms import Form, StringField, IntegerField, validators
 from wtforms.validators import NumberRange
 
 # BookForm 
-class BookForm(Form):
+class BookForm(FlaskForm):
     title = StringField('Title', [validators.InputRequired()])
     author = StringField('Author', [validators.InputRequired()])
     description = StringField('Description')
@@ -16,35 +17,24 @@ class BookForm(Form):
     subject = StringField('Subject')
 
 # MemberForm
-class MemberForm(Form):
+class MemberForm(FlaskForm):
     name = StringField('Name', [validators.InputRequired()])
     email = StringField('Email', [validators.InputRequired()])
     address = StringField('Address', [validators.InputRequired()])
     phone = StringField('Phone', [validators.InputRequired()])
 
-# TransactionForm
-class TransactionForm(Form):
-    book_name = StringField('Book Name', [validators.InputRequired()])
-    member_name = StringField('Member Name', [validators.InputRequired()])
-    fee_per_day = IntegerField('Fee/Day', [validators.InputRequired()])
-    issue_date = StringField('Issue Date')
-    return_date = StringField('Return Date')
-    total_fee = IntegerField('Total Fee')
-    amount_paid = IntegerField('Amount Paid', [validators.InputRequired()])
-    status = StringField('Status')
-
 # BookIssueForm
-class BookIssueForm(Form):
+class BookIssueForm(FlaskForm):
     book_name = StringField('Book Name', [validators.InputRequired()])
     member_name = StringField('Member Name', [validators.InputRequired()])
     fee_per_day = IntegerField('Fee/Day', [validators.InputRequired()])
 
 # BookReturnForm
-class BookReturnForm(Form):
+class BookReturnForm(FlaskForm):
     amount_paid = IntegerField('Amount Paid', [validators.InputRequired()])
 
 # ImportsForm
-class ImportBooksForm(Form):
+class ImportBooksForm(FlaskForm):
     no_of_books = IntegerField('No of Books', [validators.InputRequired(), NumberRange(min=1, max=20)])
     quantity_per_book = IntegerField('Quantity Per Book', [validators.InputRequired()])
     title = StringField('Title')

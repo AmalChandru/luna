@@ -10,6 +10,7 @@
             <!-- Start of the form -->
             <form action="{{ url_for('import_books.import_books') }}" method="POST">
                 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    {{ form.csrf_token }}
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">No of Books</span>
                         <input type="number" name="no_of_books"

@@ -10,6 +10,7 @@
             <!-- Start of the form -->
             <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                 <form action="{{ url_for('transactions.close_transaction', transaction_id=transaction_info._id) }}" method="POST">
+                    {{ form.csrf_token }}
                     <p class="mt-4 text-sm font-bold text-gray-700 dark:text-gray-400">Per Day Fee: {{ transaction_info.per_day_fee }}</p>
                     <p class="mt-4 text-sm font-bold text-gray-700 dark:text-gray-400">Borrowed On: {{ transaction_info.borrowed_on }}</p>
                     <p class="mt-4 text-sm font-bold text-gray-700 dark:text-gray-400">Rented for: {{ transaction_info.rented_for }} days</p>

@@ -1,5 +1,6 @@
 import logging
 from flask import Flask
+from flask_wtf import CSRFProtect
 from .config import get_config
 from pymongo import MongoClient
 
@@ -9,9 +10,13 @@ from .routes.transactions import transactions_bp
 from .routes.import_books import import_books_bp
 from .routes.errors import register_error_handlers
 
+csrf = CSRFProtect()
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(get_config())
+
+    csrf.init_app(app)
 
     # Set up logging
     logging.basicConfig(level=app.config['LOGGING_LEVEL'])

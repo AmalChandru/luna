@@ -15,6 +15,7 @@
             <form action="{{ url_for('books.add_book') if not book else url_for('books.edit_book', id=book._id) }}"
                 method="POST">
                 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    {{ form.csrf_token }}
                     <label class="block text-sm">
                         <span class="text-gray-700 dark:text-gray-400">Title</span>
                         {{ form.title(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700

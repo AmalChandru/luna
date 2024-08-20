@@ -15,6 +15,7 @@
             <form action="{{ url_for('members.add_member') if not member else url_for('members.edit_member', id=member._id) }}"
                 method="POST">
                 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    {{ form.csrf_token }}
                     <label class="block text-sm">
                         <span class="text-gray-700 dark:text-gray-400">Name</span>
                         {{ form.name(class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700

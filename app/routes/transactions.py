@@ -96,7 +96,7 @@ def create_transaction():
 
         return redirect(url_for('transactions.list_transactions'))  # Redirect to the transaction list
 
-    return render_template('transactions/issue.html', books=books, members=members)
+    return render_template('transactions/issue.html', books=books, members=members, form=form)
 
 def update_transaction_record(transaction_id, amount_paid, transaction_info):
     """Update the transaction record in the database."""
@@ -143,7 +143,8 @@ def increment_book_copies(transaction):
 def close_transaction(transaction_id):
     db = current_app.db
     transaction = db.transactions.find_one({'_id': ObjectId(transaction_id)})  # Fetch the transaction record from the database
-    
+    form = BookReturnForm(request.form)
+
     # Calculate transaction info based on the existing record
     issue_date = datetime.strptime(transaction['issue_date'], '%Y-%m-%d')
     days_rented = (datetime.now() - issue_date).days  # Calculate days rented
@@ -154,12 +155,8 @@ def close_transaction(transaction_id):
         'rented_for': days_rented,
         'amount_due': transaction['fee_per_day'] * days_rented
     }
-    
-    if request.method == 'GET':
-        return render_template('transactions/return.html', transaction_info=transaction_info)
-    
-    if request.method == 'POST':
-        form = BookReturnForm(request.form)
+
+    if request.method == 'POST' and form.validate():
         amount_paid = float(form.amount_paid.data)  # Get the amount paid from the form
 
         try:
@@ -172,3 +169,5 @@ def close_transaction(transaction_id):
             flash(f'Error closing transaction: {e}', 'error')  # Handle any errors during the update process
 
         return redirect(url_for('transactions.list_transactions'))
+    
+    return render_template('transactions/return.html', transaction_info=transaction_info, form=form)

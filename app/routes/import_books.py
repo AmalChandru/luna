@@ -28,6 +28,7 @@ def import_books():
             response = requests.get(url, params=parameters)
             response = response.json()
             if not response['message']:
+                flash('No books found.', 'error')
                 break
             
             for book in response['message'][:form.no_of_books.data]: # import only form.no_of_books.data books
