@@ -10,13 +10,11 @@ Luna is a powerful library management application designed to help librarians ma
 ## Table of Contents
 
 - [Features](#features)
-- [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
-- [Resources That Helped](#resources-that-helped)
+- [Brewed with:](#brewed-with)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -24,13 +22,6 @@ Luna is a powerful library management application designed to help librarians ma
 - **👥 Member Management**: Register, update, and manage library members.
 - **💳 Transaction Management**: Handle book issuance and returns with fee calculations.
 - **📥 Data Import**: Bulk import books using the Frappe API interface.
-
-## Technologies Used
-
-- **Flask**: A lightweight WSGI web application framework for Python.
-- **MongoDB**: A NoSQL database for storing book and member data.
-- **Jinja**: A templating engine for rendering HTML templates.
-- **Tailwind CSS**: A utility-first CSS framework for styling the application.
 
 ## Installation
 
