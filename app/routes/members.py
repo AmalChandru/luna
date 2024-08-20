@@ -91,12 +91,18 @@ def edit_member(id):
 
 @members_bp.route('/delete_member/<id>', methods=['POST'])
 def delete_member(id):
-    """Delete a member from the database"""
+    """Delete a member from the database if they have no outstanding debt or borrowed books."""
     db = current_app.db
-    try:
-        db.members.delete_one({"_id": ObjectId(id)})  # Delete the member by ID
-        flash('Member deleted successfully!', 'success')
-    except Exception as e:
-        flash(f'Error deleting member: {e}', 'error')  # Handle deletion errors
+    member = db.members.find_one({"_id": ObjectId(id)})  # Find the member by ID
+
+    # Check if the member has outstanding debt or books borrowed
+    if member and (member.get('outstanding_debt', 0) > 0 or member.get('no_of_books_borrowed', 0) > 0):
+        flash('Cannot delete member with outstanding debt or borrowed books.', 'error')
+    else:
+        try:
+            db.members.delete_one({"_id": ObjectId(id)})  # Delete the member by ID
+            flash('Member deleted successfully!', 'success')
+        except Exception as e:
+            flash(f'Error deleting member: {e}', 'error')  # Handle deletion errors
 
     return redirect(url_for('members.list_members'))  # Redirect to the member list
