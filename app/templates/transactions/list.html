@@ -1,129 +1,138 @@
 {% extends "base.html" %}
 
 {% block body %}
-<div class="flex flex-col flex-1 w-full">
-  <main class="h-full overflow-y-auto">
-    <div class="container px-6 mx-auto grid">
-      <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-        Transactions 💲
-      </h2>
-      <!-- Flex container for buttons and table -->
-      <div class="flex flex-col">
-        <!-- Buttons container -->
-        <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-4">
-          <!-- Search input -->
-    <div class="w-full sm:w-auto">
-      <div class="relative max-w-xl focus-within:text-black-500">
-        <div class="absolute inset-y-0 flex items-center pl-2">
-          <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd"
-              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              clip-rule="evenodd"></path>
-          </svg>
+<h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+  Transactions 💲
+</h2>
+<!-- Flex container for buttons and table -->
+<div class="flex flex-col">
+  <!-- Buttons container -->
+  <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-4">
+    <!-- Search input -->
+    <form action="{{ url_for('transactions.list_transactions') }}" method="GET">
+      <div class="w-full sm:w-auto">
+        <div class="relative max-w-xl focus-within:text-black-500">
+          <div class="absolute inset-y-0 flex items-center pl-2">
+            <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <input
+            class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-black-300 focus:outline-none focus:shadow-outline-black form-input"
+            type="text" name="q" placeholder="Search books, members" aria-label="Search" {% if search_query %}
+            value="{{ search_query }}" {% else %} value="" {% endif %} />
         </div>
-        <input
-          class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-black-300 focus:outline-none focus:shadow-outline-black form-input"
-          type="text" placeholder="Search for transactions" aria-label="Search" />
+      </div>
+    </form>
+    <!-- Add Member Button -->
+    <a href="{{ url_for('transactions.create_transaction')}}" class="mb-6">
+      <button
+        class="flex items-center px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-black border border-transparent rounded-lg active:bg-black hover:bg-gray-800 focus:outline-none focus:shadow-outline-black">
+        <span>Issue Book</span>
+        <svg class="w-4 h-4 ml-2 -mr-1" fill="currentColor" aria-hidden="true" viewBox="0 0 20 20">
+          <path fill-rule="evenodd"
+            d="M10 5a1 1 0 011 1v4h4a1 1 0 010 2h-4v4a1 1 0 01-2 0v-4H6a1 1 0 010-2h4V6a1 1 0 011-1z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </button>
+    </a>
+  </div>
+  </div>
+
+  {% if message %}
+  <div class="flex justify-center items-center h-80">
+    <div class="text-center">
+      <p class="text-center">{{ message }}. Go <a
+          class="text-gray-500 dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+          href="{{ url_for('transactions.list_transactions') }}">back.</a></p>
+    </div>
+  </div>
+  {% else %}
+
+  <!-- Transactions listing -->
+  <div class="w-full overflow-hidden rounded-lg shadow-xs">
+    <div class="w-full overflow-x-auto">
+      <table class="w-full whitespace-nowrap">
+        <thead>
+          <tr
+            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+            <th class="px-4 py-3">Book Name</th>
+            <th class="px-4 py-3">Member Name</th>
+            <th class="px-4 py-3">Fee/Day</th>
+            <th class="px-4 py-3">Issue Date</th>
+            <th class="px-4 py-3">Return Date</th>
+            <th class="px-4 py-3">Total Fee</th>
+            <th class="px-4 py-3">Amount Paid</th>
+            <th class="px-4 py-3">Status</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y dark:divide-gray-700 dark:text-gray-800">
+          {% for transaction in transactions %}
+          <tr class="hover:bg-gray-100">
+            <td class="px-6 py-4">{{ transaction.book_name }}</td>
+            <td class="px-6 py-4">{{ transaction.member_name }}</td>
+            <td class="px-6 py-4">{{ transaction.fee_per_day }}</td>
+            <td class="px-6 py-4">{{ transaction.issue_date }}</td>
+            <td class="px-6 py-4">{{ transaction.return_date }}</td>
+            <td class="px-6 py-4">{{ transaction.total_fee }}</td>
+            <td class="px-6 py-4">{{ transaction.amount_paid }}</td>
+            <td class="px-6 py-4">
+              <button
+                class="px-2 py-1 font-semibold leading-tight {% if transaction.status == 'Return' %}text-green-700 bg-green-100 dark:text-green-100 dark:bg-green-700 cursor-pointer{% else %}text-red-700 bg-red-100 dark:text-red-100 dark:bg-red-700 cursor-not-allowed{% endif %} rounded-full"
+                {% if transaction.status=='Return'
+                %}onclick="window.location.href='{{ url_for('transactions.close_transaction', transaction_id=transaction._id) }}';"
+                {% endif %} {% if transaction.status !='Return' %}disabled{% endif %}>
+                {{ transaction.status }}
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div
+        class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+        <span class="flex items-center col-span-3">
+          Showing 1-3 of 3
+        </span>
+        <span class="col-span-2"></span>
+        <!-- Pagination -->
+        <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+          <nav aria-label="Table navigation">
+            <ul class="inline-flex items-center">
+              <li>
+                <button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-black"
+                  aria-label="Previous" disabled>
+                  <svg aria-hidden="true" class="w-4 h-4 fill-current text-gray-400 dark:text-gray-600"
+                    viewBox="0 0 20 20">
+                    <path
+                      d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                      clip-rule="evenodd" fill-rule="evenodd"></path>
+                  </svg>
+                </button>
+              </li>
+              <li>
+                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-black">1</button>
+              </li>
+              <li>
+                <button
+                  class="px-3 py-1 text-white transition-colors duration-150 bg-black border border-r-0 border-black rounded-md focus:outline-none focus:shadow-outline-black">2</button>
+              </li>
+              <li>
+                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-black" disabled>3</button>
+              </li>
+              <li>
+                <span class="px-3 py-1">...</span>
+              </li>
+              <li>
+                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-black">Next</button>
+              </li>
+            </ul>
+          </nav>
+        </span>
       </div>
     </div>
-          <!-- Add Member Button -->
-          <a href="{{ url_for('transactions.create_transaction')}}" class="mb-6">
-            <button
-              class="flex items-center px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-black border border-transparent rounded-lg active:bg-black hover:bg-gray-800 focus:outline-none focus:shadow-outline-black">
-              <span>Issue Book</span>
-              <svg class="w-4 h-4 ml-2 -mr-1" fill="currentColor" aria-hidden="true" viewBox="0 0 20 20">
-                <path fill-rule="evenodd"
-                  d="M10 5a1 1 0 011 1v4h4a1 1 0 010 2h-4v4a1 1 0 01-2 0v-4H6a1 1 0 010-2h4V6a1 1 0 011-1z"
-                  clip-rule="evenodd"></path>
-              </svg>
-            </button>
-          </a>
-        </div>
-        <!-- New Table -->
-        <div class="w-full overflow-hidden rounded-lg shadow-xs">
-          <div class="w-full overflow-x-auto">
-            <table class="w-full whitespace-nowrap">
-              <thead>
-                <tr
-                  class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                  <th class="px-4 py-3">Book Name</th>
-                  <th class="px-4 py-3">Member Name</th>
-                  <th class="px-4 py-3">Fee/Day</th>
-                  <th class="px-4 py-3">Issue Date</th>
-                  <th class="px-4 py-3">Return Date</th>
-                  <th class="px-4 py-3">Total Fee</th>
-                  <th class="px-4 py-3">Amount Paid</th>
-                  <th class="px-4 py-3">Status</th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y dark:divide-gray-700 dark:text-gray-800">
-                {% for transaction in transactions %}
-                <tr class="hover:bg-gray-100">
-                  <td class="px-6 py-4">{{ transaction.book_name }}</td>
-                  <td class="px-6 py-4">{{ transaction.member_name }}</td>
-                  <td class="px-6 py-4">{{ transaction.fee_per_day }}</td>
-                  <td class="px-6 py-4">{{ transaction.issue_date }}</td>
-                  <td class="px-6 py-4">{{ transaction.return_date }}</td>
-                  <td class="px-6 py-4">{{ transaction.total_fee }}</td>
-                  <td class="px-6 py-4">{{ transaction.amount_paid }}</td>
-                  <td class="px-6 py-4">
-                    <button
-                      class="px-2 py-1 font-semibold leading-tight {% if transaction.status == 'Return' %}text-green-700 bg-green-100 dark:text-green-100 dark:bg-green-700 cursor-pointer{% else %}text-red-700 bg-red-100 dark:text-red-100 dark:bg-red-700 cursor-not-allowed{% endif %} rounded-full"
-                      {% if transaction.status == 'Return' %}onclick="window.location.href='{{ url_for('transactions.close_transaction', transaction_id=transaction._id) }}';"{% endif %} 
-                      {% if transaction.status != 'Return' %}disabled{% endif %}>
-                      {{ transaction.status }}
-                    </button>
-                  </td>                 
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            <div
-              class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-              <span class="flex items-center col-span-3">
-                Showing 1-3 of 3
-              </span>
-              <span class="col-span-2"></span>
-              <!-- Pagination -->
-              <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                <nav aria-label="Table navigation">
-                  <ul class="inline-flex items-center">
-                    <li>
-                      <button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-black"
-                        aria-label="Previous" disabled>
-                        <svg aria-hidden="true" class="w-4 h-4 fill-current text-gray-400 dark:text-gray-600"
-                          viewBox="0 0 20 20">
-                          <path
-                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                            clip-rule="evenodd" fill-rule="evenodd"></path>
-                        </svg>
-                      </button>
-                    </li>
-                    <li>
-                      <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-black">1</button>
-                    </li>
-                    <li>
-                      <button
-                        class="px-3 py-1 text-white transition-colors duration-150 bg-black border border-r-0 border-black rounded-md focus:outline-none focus:shadow-outline-black">2</button>
-                    </li>
-                    <li>
-                      <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-black"
-                        disabled>3</button>
-                    </li>
-                    <li>
-                      <span class="px-3 py-1">...</span>
-                    </li>
-                    <li>
-                      <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-black">Next</button>
-                    </li>
-                  </ul>
-                </nav>
-              </span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-  </main>
-</div>
-{% endblock %}
+  </div>
+  {% endif %}
+  {% endblock %}

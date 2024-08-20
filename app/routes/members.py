@@ -8,10 +8,32 @@ members_bp = Blueprint('members', __name__, url_prefix='/members')
 
 @members_bp.route('/')
 def list_members():
-    """List all members in the database"""
+    """List all members in the database with optional search functionality."""
     db = current_app.db
-    members = db.members.find()
-    return render_template('members/list.html', members=members)
+    search_query = request.args.get('q')  # Get the search query from the request URL
+
+    if search_query:
+        # Search for members where the name or email contains the search query (case-insensitive)
+        members = db.members.find({
+            "$or": [
+                {"name": {"$regex": search_query, "$options": "i"}},
+                {"email": {"$regex": search_query, "$options": "i"}}
+            ]
+        })
+    else:
+        # If no search query is provided, return all members
+        members = db.members.find()
+
+    # Convert the cursor to a list to check if it is empty
+    members_list = list(members)
+    
+    # Check if no members are found
+    if len(members_list) == 0:
+        message = "No members found. Maybe they're in another galaxy?"
+    else:
+        message = None
+
+    return render_template('members/list.html', members=members_list, message=message, search_query=search_query)
 
 @members_bp.route('/add', methods=['GET', 'POST'])
 def add_member():

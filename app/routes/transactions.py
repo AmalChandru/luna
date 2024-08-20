@@ -9,10 +9,32 @@ transactions_bp = Blueprint('transactions', __name__, url_prefix='/transactions'
 
 @transactions_bp.route('/')
 def list_transactions():
-    """List all transactions in the database"""
+    """List all transactions in the database with optional search functionality."""
     db = current_app.db
-    transactions = db.transactions.find()
-    return render_template('transactions/list.html', transactions=transactions)
+    search_query = request.args.get('q')  # Get the search query from the request URL
+
+    if search_query:
+        # Search for transactions where the book name or member name contains the search query (case-insensitive)
+        transactions = db.transactions.find({
+            "$or": [
+                {"book_name": {"$regex": search_query, "$options": "i"}},
+                {"member_name": {"$regex": search_query, "$options": "i"}}
+            ]
+        })
+    else:
+        # If no search query is provided, return all transactions
+        transactions = db.transactions.find()
+
+    # Convert the cursor to a list to check if it is empty
+    transactions_list = list(transactions)
+
+    # Check if no transactions are found
+    if len(transactions_list) == 0:
+        message = "No transactions found. Time to take a vacation!"
+    else:
+        message = None
+
+    return render_template('transactions/list.html', transactions=transactions_list, message=message, search_query=search_query)
 
 def is_transaction_valid(book, member):
     """Check if the transaction can be created based on book availability and member debt."""

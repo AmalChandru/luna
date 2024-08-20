@@ -8,52 +8,51 @@
                 Import Books ⬇️📚
             </h2>
             <!-- Start of the form -->
-            <form action="{{ url_for('import_books.import_books') }}"
-                method="POST">
+            <form action="{{ url_for('import_books.import_books') }}" method="POST">
                 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">No of Books</span>
-                        <input type="number" name="no_of_books" 
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" 
+                        <input type="number" name="no_of_books"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             placeholder="No of Books Needed" required />
-                            {% if form.no_of_books.errors %}
-                            <div class="text-sm">{{ form.no_of_books.errors[0] }}</div>
-                            {% endif %}
+                        {% if form.no_of_books.errors %}
+                        <div class="text-sm">{{ form.no_of_books.errors[0] }}</div>
+                        {% endif %}
                     </label>
 
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">Quantity Per Book</span>
-                        <input type="number" name="quantity_per_book" 
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" 
+                        <input type="number" name="quantity_per_book"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             placeholder="Quantity Per Book" required />
                     </label>
 
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">Title</span>
-                        <input type="text" name="title" 
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" 
-                            placeholder="Book Title"/>
+                        <input type="text" name="title"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            placeholder="Book Title" />
                     </label>
 
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">Author</span>
-                        <input type="text" name="author" 
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" 
-                            placeholder="Author"/>
+                        <input type="text" name="author"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            placeholder="Author" />
                     </label>
 
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">ISBN</span>
-                        <input type="text" name="isbn" 
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" 
-                            placeholder="ISBN"/>
+                        <input type="text" name="isbn"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            placeholder="ISBN" />
                     </label>
 
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">Publisher</span>
-                        <input type="text" name="publisher" 
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" 
-                            placeholder="Author"/>
+                        <input type="text" name="publisher"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            placeholder="Author" />
                     </label>
 
                     <div class="flex mt-6">
@@ -63,9 +62,10 @@
                         </button>
                         <button type="button"
                             class="ml-4 px-4 py-2 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 bg-gray-200 border border-transparent rounded-lg active:bg-gray-300 hover:bg-gray-300 focus:outline-none focus:shadow-outline-gray"
-                            onclick="window.history.back();">
+                            onclick="window.location.href='{{ url_for('books.list_books') }}';">
                             Cancel
                         </button>
+
                     </div>
                 </div>
             </form>

@@ -8,11 +8,33 @@ books_bp = Blueprint('books', __name__, url_prefix='/books')
 
 @books_bp.route('/')
 def list_books():
-    """List all books in the database."""
+    """List all books in the database with optional search functionality."""
     db = current_app.db
-    books = db.books.find()
-    print(books)
-    return render_template('books/list.html', books=books)
+    search_query = request.args.get('q')  # Get the search query from the request URL
+
+    if search_query:
+        # Search for books where the title, author, or ISBN contains the search query (case-insensitive)
+        books = db.books.find({
+            "$or": [
+                {"title": {"$regex": search_query, "$options": "i"}},
+                {"author": {"$regex": search_query, "$options": "i"}},
+                {"isbn": {"$regex": search_query, "$options": "i"}}
+            ]
+        })
+    else:
+        # If no search query is provided, return all books
+        books = db.books.find()
+
+    # Convert the cursor to a list to check if it is empty
+    books_list = list(books)
+    
+    # Check if no books are found
+    if len(books_list) == 0:
+        message = "Geez Rick, there's nothing here!"
+    else:
+        message = None
+
+    return render_template('books/list.html', books=books_list, message=message, search_query=search_query)
 
 @books_bp.route('/add', methods=['GET', 'POST'])
 def add_book():
