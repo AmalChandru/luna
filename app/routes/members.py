@@ -52,7 +52,6 @@ def add_member():
 
         try:
             db = current_app.db
-            print(new_member)
             db.members.insert_one(new_member)  # Insert the new member into the database
             flash('Member added successfully!', 'success')
         except Exception as e:
@@ -67,7 +66,6 @@ def edit_member(id):
     db = current_app.db
     member = db.members.find_one({"_id": ObjectId(id)})  # Fetch the member by ID
     form = MemberForm(request.form, obj=member)  # Initialize the form with existing member data
-    print(form.validate())
     if request.method == 'POST' and form.validate():
         try:
             # Update member details in the database
