@@ -2,9 +2,10 @@ import logging
 from flask import Flask
 from flask_wtf import CSRFProtect
 from .config import get_config
-from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
-from .routes.books import books_bp
+from .routes.books import books_bp 
 from .routes.members import members_bp
 from .routes.transactions import transactions_bp
 from .routes.import_books import import_books_bp
@@ -22,7 +23,7 @@ def create_app():
     logging.basicConfig(level=app.config['LOGGING_LEVEL'])
 
     try:
-        client = MongoClient(app.config['MONGO_URI'])
+        client = MongoClient(app.config['MONGO_URI'], server_api=ServerApi('1'))
         app.db = client.luna 
     except Exception as e:
         logging.error("Could not connect to MongoDB: %s", e)
