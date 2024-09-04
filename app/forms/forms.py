@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import Form, StringField, IntegerField, validators
+from wtforms import Form, StringField, IntegerField, validators, RadioField
 from wtforms.validators import NumberRange
 
 # BookForm 
@@ -41,3 +41,7 @@ class ImportBooksForm(FlaskForm):
     author = StringField('Author')
     isbn = StringField('ISBN')
     publisher = StringField('Publisher')
+    sort_by = RadioField('Sort By', choices=[
+        ('title', 'Based on Title'),
+        ('author', 'Based on Author')
+    ], default='title')  

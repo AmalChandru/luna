@@ -56,6 +56,24 @@
                             placeholder="Author" />
                     </label>
 
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Sort
+                        </span>
+                        <div class="mt-2">
+                            <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                                <input type="radio" name="sort_by" value="title"
+                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" />
+                                <span class="ml-2">Based on Title</span>
+                            </label>
+                            <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                                <input type="radio" name="sort_by" value="author"
+                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" />
+                                <span class="ml-2">Based on Author</span>
+                            </label>
+                        </div>
+                    </label>
+
                     <div class="flex mt-6">
                         <button type="submit"
                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-black border border-transparent rounded-lg active:bg-black hover:bg-gray-800 focus:outline-none focus:shadow-outline-black">
@@ -66,7 +84,6 @@
                             onclick="window.location.href='{{ url_for('books.list_books') }}';">
                             Cancel
                         </button>
-
                     </div>
                 </div>
             </form>
