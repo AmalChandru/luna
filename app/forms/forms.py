@@ -35,7 +35,7 @@ class BookReturnForm(FlaskForm):
 
 # ImportsForm
 class ImportBooksForm(FlaskForm):
-    no_of_books = IntegerField('No of Books', [validators.InputRequired(), NumberRange(min=1, max=20)])
+    no_of_books = IntegerField('No of Books', [validators.InputRequired()])
     quantity_per_book = IntegerField('Quantity Per Book', [validators.InputRequired()])
     title = StringField('Title')
     author = StringField('Author')
