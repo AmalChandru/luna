@@ -35,10 +35,8 @@ def import_books():
         # Sort books_to_insert based on user selection
         if form.sort_by.data == 'title':
             books_to_insert.sort(key=lambda x: x['title'])
-            print("Books sorted by title:")
         elif form.sort_by.data == 'author':
             books_to_insert.sort(key=lambda x: x['author'])
-            print("Books sorted by author:")
 
         insert_books(books_to_insert)
 
